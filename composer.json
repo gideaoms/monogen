@@ -1,0 +1,22 @@
+{
+    "name": "gideaoms/monogen",
+    "description": "Framework para gerenciar projetos em PHP",
+    "type": "library",
+    "keywords": ["php"],
+    "require": {
+        "php": "5.4.0"
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Gideão Silva",
+            "email": "gideaoms@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "autoload": {
+        "psr-4": {
+            "Monogen\\": "src/Monogen"
+        }
+    }
+}
