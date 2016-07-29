@@ -19,7 +19,7 @@
             "Monogen\\": "src/"
         },
         "files": [
-            "Monogen/Util/helpers.php"
+            "src/Monogen/Util/helpers.php"
         ]
     }
 }
