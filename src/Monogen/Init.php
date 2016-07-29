@@ -7,9 +7,9 @@ use Monogen\Http\Request;
 class Init
 {
 
-	public static function start()
+	public static function start(Request $request)
 	{
-		var_dump(app_path('Requests/Routes.routes.php'));
+		$request->configUrl((require app_path('Requests/Routes/routes.php')));
 	}
 
 }
