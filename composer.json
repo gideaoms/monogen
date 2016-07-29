@@ -16,7 +16,10 @@
     "minimum-stability": "stable",
     "autoload": {
         "psr-4": {
-            "Monogen\\": "src/Monogen"
-        }
+            "Monogen\\": "src/"
+        },
+        "files": [
+            "Monogen/Util/helpers.php"
+        ]
     }
 }
