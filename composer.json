@@ -1,5 +1,5 @@
 {
-    "name": "gideaoms/monogen",
+    "name": "gideaoms/monogen-framework",
     "description": "Framework para gerenciar projetos em PHP",
     "type": "library",
     "keywords": ["php"],
