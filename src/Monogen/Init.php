@@ -1,15 +1,16 @@
 <?php
 
-namespace monogen;
+namespace Monogen;
 
 use Monogen\Http\Request;
+use Monogen\Http\Route;
 
 class Init
 {
 
 	public static function start(Request $request)
 	{
-		$request->configUrl((require app_path('Requests/Routes/routes.php')));
+		$request->callRequest(new Route);
 	}
 
 }

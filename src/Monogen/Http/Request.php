@@ -4,52 +4,69 @@ namespace Monogen\Http;
 
 class Request
 {
-	private $url;
-	private $parameters;
+	private $urlRequest;
+	private $params = [];	
 
-	public function configUrl(array $routes)
+	public function __construct()
 	{
-		
-		$this->explodeUri( $_SERVER['REQUEST_URI'] );
+		$this->urlRequest = $_SERVER['REQUEST_URI'];
+	}
 
-		var_dump($this->url);
-		echo '<br>';
-
-		foreach ($routes as $url => $configs)
+	public function callRequest(Route $route)
+	{
+		$route->setUrl( $this->urlRequest );
+		foreach ($route->getRoutes() as $url => $config)
 		{
-			$ereg = '/^' . str_replace('/', '\\/', $url) . '$/';
-			var_dump($ereg);
-			if (preg_match($ereg, $url))
+			if ( $route->testEqualsUrl( $url ) and strtolower($_SERVER['REQUEST_METHOD']) == $config['type'] )
 			{
-				echo '<br>passo aqui ' . $url . '<br>';
+				$class = "Younote\\Requests\\Controllers\\{$config['class']}";
+				if (class_exists($class))
+				{
+					$controller = new $class;
+					$method = $config['method'];
+					if (!method_exists($controller, $method))
+						echo 'ERROR: method not found';
+					else
+					{
+						$this->setParam($url);
+						new Response($controller->$method($this));
+						break;
+					}
+				}
+				else
+					echo 'ERROR: class not found';
 			}
 		}
 	}
 
 	public function get( $index )
 	{
-		// retornar os parametros que foram passados por $_GET
+		return filter_input(INPUT_GET, $index);
 	}
 
-	public function post( $index )
+	public function post($index = null)
 	{
-		// retornar os parametros que foram passado por $_POST
+		if ($index)
+			return filter_input(INPUT_POST, $index);
+		return filter_input_array(INPUT_POST);
 	}
 
-	public function file( $index )
+	public function getParam($index)
 	{
-		// retorna um arquivo file
+		return $this->params['{' . $index . '}'];
 	}
 
-	public function files( $index )
+	private function setParam($url)
 	{
-		// retornar todos os arquivos files
+		$indexesUrl = explode('/', $url);
+		$indexesRequest = explode('/', $this->urlRequest);
+		foreach ($indexesUrl as $key => $value)
+		{
+			if (preg_match('/^\{(\w)+\}$/i', $value))
+			{
+				$this->params[$value] = $indexesRequest[$key];
+			}
+		}
 	}
 
-	private function explodeUri( $uri )
-	{
-		$newUri = explode('?', $uri);
-		$this->url = $newUri[0];		
-		$this->parameters = isset( $newUri[1] ) ? $newUri[1] : "";
-	}
 }
