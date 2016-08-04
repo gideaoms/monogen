@@ -19,7 +19,7 @@ class Request
 		{
 			if ( $route->testEqualsUrl( $url ) and strtolower($_SERVER['REQUEST_METHOD']) == $config['type'] )
 			{
-				$class = "Younote\\Requests\\Controllers\\{$config['class']}";
+				$class = "App\\Requests\\Controllers\\{$config['class']}";
 				if (class_exists($class))
 				{
 					$controller = new $class;
