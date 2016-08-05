@@ -10,9 +10,9 @@ if (!function_exists('app_path'))
 
 if (!function_exists('get_config'))
 {
-	function get_config($file)
+	function get_config()
 	{
-		return require(local_disk() . 'config' . DIRECTORY_SEPARATOR . $file . '.php');
+		return local_disk() . 'config' . DIRECTORY_SEPARATOR . 'app.json';
 	}
 }
 

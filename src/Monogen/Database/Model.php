@@ -2,6 +2,8 @@
 
 namespace Monogen\Database;
 
+use Monogen\System\Config;
+
 abstract class Model
 {
 	protected $table;
@@ -10,10 +12,10 @@ abstract class Model
 
 	public function __construct()
 	{
-		$config = get_config('database');
-		switch ($config['default']) {
+		$default = Config::getValue('database.default');
+		switch ($default) {
 			case 'mysql':
-				$this->database = new Mysql($config);
+				$this->database = new Mysql();
 				break;
 			default:
 				echo 'ERROR: database not configured.';

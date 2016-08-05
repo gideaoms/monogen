@@ -2,6 +2,8 @@
 
 namespace Monogen\Database;
 
+use Monogen\System\Config;
+
 class Mysql extends Connection
 {
 	private $config;
@@ -10,15 +12,16 @@ class Mysql extends Connection
 	private $sql;
 	private $resultset;
 
-	public function __construct($config)
-	{
-		$this->config = $config;
-		$this->drive = $config['default'];
-		$this->host = $this->getIndexConfig('host');
-		$this->dbname = $this->getIndexConfig('database');
-		$this->user = $this->getIndexConfig('username');
-		$this->password = $this->getIndexConfig('password');
-		$this->charset = $this->getIndexConfig('charset');
+	public function __construct()
+	{		
+		$this->config = Config::getValue('database.connections.mysql');
+
+		$this->drive = $this->config->driver;
+		$this->host = $this->config->host;
+		$this->dbname = $this->config->database;
+		$this->user = $this->config->username;
+		$this->password = $this->config->password;
+		$this->charset = $this->config->charset;
 		parent::__construct();
 	}
 
@@ -30,11 +33,6 @@ class Mysql extends Connection
 		$rs = $this->getConnection()->prepare($this->sql);
 		$rs->execute($this->data);
 		$this->resultset = $this->getConnection()->lastInsertId();
-	}
-
-	private function getIndexConfig($index)
-	{
-		return $this->config['connections']['mysql'][$index];
 	}
 
 	private function getSyntax() {
