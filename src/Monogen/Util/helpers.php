@@ -16,6 +16,14 @@ if (!function_exists('get_config'))
 	}
 }
 
+if (!function_exists('get_routes'))
+{
+	function get_routes()
+	{
+		return local_disk() . 'config' . DIRECTORY_SEPARATOR . 'routes.json';
+	}
+}
+
 if (!function_exists('local_disk'))
 {
 	function local_disk()

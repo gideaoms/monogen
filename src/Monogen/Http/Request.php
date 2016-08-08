@@ -17,13 +17,13 @@ class Request
 		$route->setUrl( $this->urlRequest );
 		foreach ($route->getRoutes() as $url => $config)
 		{
-			if ( $route->testEqualsUrl( $url ) and strtolower($_SERVER['REQUEST_METHOD']) == $config['type'] )
+			if ( $route->testEqualsUrl( $url ) and strtolower($_SERVER['REQUEST_METHOD']) == $config->type )
 			{
-				$class = "App\\Requests\\Controllers\\{$config['class']}";
+				$class = "Younote\\Controllers\\{$config->class}";
 				if (class_exists($class))
 				{
 					$controller = new $class;
-					$method = $config['method'];
+					$method = $config->method;
 					if (!method_exists($controller, $method))
 						echo 'ERROR: method not found';
 					else
@@ -35,7 +35,7 @@ class Request
 				}
 				else
 					echo 'ERROR: class not found';
-			}
+			}			
 		}
 	}
 
